@@ -42,6 +42,18 @@ To build the benchmarking code, run:
 Note that the benchmarking code requires a frozen and optimized model. Use
 `hdrnet/bin/scripts/optimize_graph.sh` and `hdrnet/bin/freeze.py to produce these`.
 
+for making the benchmark you need to build tensorflow.so/tensorflow_cc.so files using bazel and add them to your tensorflow 1.1 directory cloned from github by using:
+bazel build //tensorflow:libtensorflow.so
+bazel build //tensorflow:libtensorflow_cc.so
+
+Then Copy the following include headers and dynamic shared library to /usr/local/lib and /usr/local/include:
+
+mkdir /usr/local/include/tf
+cp -r bazel-genfiles/ /usr/local/include/tf/
+cp -r tensorflow /usr/local/include/tf/
+cp -r third_party /usr/local/include/tf/
+cp -r bazel-bin/libtensorflow_cc.so /usr/local/lib/
+
 To build the Android demo, see dedicated section below.
 
 ### Test
